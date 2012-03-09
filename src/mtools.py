@@ -205,6 +205,12 @@ def test():
     test_factors()
     test_separate_digits()
 
+def run(q):
+    q.test()
+    t = time.time()
+    print "answer = %s" % (q.solve())
+    print "(%s)" % (time.time() - t)
+
 if __name__ == "__main__":
     if len(sys.argv) == 1:
         print "running test..."
