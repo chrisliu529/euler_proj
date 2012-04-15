@@ -42,7 +42,7 @@ def test():
     assert is_special_set([157, 150, 164, 119, 79, 159, 161, 139, 158])
 
 def solve():
-    f = file("105_sets.txt")
+    f = file("sets.txt")
     n = 0
     for l in f:
         s = conv_set(l)
