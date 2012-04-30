@@ -64,15 +64,6 @@ class Graph:
         print ew, mw
         return ew - mw        
 
-def mst_prim(m):
-    pass
-
-def sum_edges(m):
-    pass
-
-def optimized_flow(fn):
-    pass
-
 class q107: 
     def test(self):
         g = Graph('107_test.txt')
