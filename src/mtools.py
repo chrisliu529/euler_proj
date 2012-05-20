@@ -1,4 +1,5 @@
 import math, sys, time
+import unittest
 
 def phi(n):
     p, c = prime_factors(n)
@@ -21,6 +22,16 @@ def separate_digits(n):
         n = n / 10
     l.reverse()
     return l
+
+def combine_digits(l):
+    l2 = list(l)
+    l2.reverse()
+    n = 0
+    i = 0
+    for x in l2:
+        n += x*(10**i)
+        i += 1
+    return n
 
 def comb(items, n=None):
     if n is None:
@@ -45,6 +56,38 @@ def perm(items, n=None):
             rest = items[:i] + items[i+1:]
             for p in perm(rest, n-1):
                 yield v + p
+
+def swap(l, i, j):
+    t = l[i]
+    l[i] = l[j]
+    l[j] = t
+
+def next_perm(items):
+    n = len(items)
+    i = n - 1
+    while i > 0 and items[i-1] >= items[i]:
+        i -= 1
+    if i == 0:
+        return []
+    j = i - 1
+    while i < n and items[i] > items[j] :
+        i += 1;
+    assert i <= n
+    i -= 1
+    swap(items, j, i);
+    j += 1
+    k = n-1
+    while (j < k):
+        swap(items, j, k);
+        j += 1
+        k -= 1
+    return items
+
+def dict_perm(items):
+    nextp = items
+    while nextp:
+        yield nextp
+        nextp = next_perm(nextp)
 
 def permute(seq):
     seqn = [seq.pop()]
@@ -194,24 +237,39 @@ def sort_factors(n):
     l.sort()
     return l
 
-def test_factors():
-    assert [1] == factors(1)
-    assert [1,2] == factors(2)
-    assert [1,3] == factors(3)
-    assert [1,2,3,6] == sort_factors(6)
-    assert [1,2,4,7,14,28] == sort_factors(28)
+class TestMtools(unittest.TestCase):
+    def setUp(self):
+        pass
+    
+    def test_factors(self):
+        self.assertEqual([1], factors(1))
+        self.assertEqual([1, 2], factors(2))
+        self.assertEqual([1, 3], factors(3))
+        self.assertEqual([1,2,3,6], sort_factors(6))
+        self.assertEqual([1,2,4,7,14,28], sort_factors(28))
 
-def test_separate_digits():
-    assert separate_digits(101) == [1, 0, 1]
-    assert separate_digits(0) == []
-    assert separate_digits(1041) == [1, 0, 4,1]
-    assert separate_digits(10123456789012) == [1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2]
-
-def test():
-    test_prime()
-    #test_prof_prime()
-    test_factors()
-    test_separate_digits()
+    def test_separate_digits(self):
+        self.assertEqual(separate_digits(101), [1, 0, 1])
+        self.assertEqual(separate_digits(0), [])
+        self.assertEqual(separate_digits(1041), [1, 0, 4, 1])
+        self.assertEqual(separate_digits(10123456789012), [1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2])
+    
+    def test_combine_digits(self):
+        self.assertEqual(combine_digits([]), 0)
+        self.assertEqual(combine_digits([1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2]), 10123456789012)
+    
+    def test_next_perm(self):
+        self.assertEqual(separate_digits(839651247), next_perm(separate_digits(839647521)))
+        self.assertEqual([1,0,1,1], next_perm([0,1,1,1]))
+        self.assertEqual([1,1,2,1], next_perm([1,1,1,2]))
+        self.assertEqual([1,2,1,1], next_perm([1,1,2,1]))
+    
+    def test_dict_perm(self):
+        results = [[0,1,1,1], [1,0,1,1], [1,1,0,1], [1,1,1,0]]
+        i = 0
+        for n in dict_perm([0, 1, 1, 1]):
+            self.assertEqual(results[i], n)
+            i += 1
 
 def run(q):
     q.test()
@@ -221,9 +279,7 @@ def run(q):
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:
-        print "running test..."
-        test()
-        print "test passed."
+        unittest.main()
     else:
         L = [is_prime(int(x)) for x in sys.argv[1:]]
         print L
