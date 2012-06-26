@@ -125,11 +125,11 @@ def fac(n):
         mul = i * mul
     return mul
 
-#A(n,m)=n(n-1)(n-2)...(n-m+1)= n!/(n-m)!
+#P(n,m)=n(n-1)(n-2)...(n-m+1)= n!/(n-m)!
 def p(n, m):
     return fac(n)/fac(n-m)
 
-#C(n,m)=A(n,m)/m!
+#C(n,m)=P(n,m)/m!
 def c(n, m):
     return p(n, m)/fac(m)
     
