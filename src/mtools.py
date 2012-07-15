@@ -237,6 +237,10 @@ def sort_factors(n):
     l.sort()
     return l
 
+def is_int_sqrt(t):
+    r = int(math.sqrt(t))
+    return r*r == t
+
 class TestMtools(unittest.TestCase):
     def setUp(self):
         pass
@@ -270,6 +274,14 @@ class TestMtools(unittest.TestCase):
         for n in dict_perm([0, 1, 1, 1]):
             self.assertEqual(results[i], n)
             i += 1
+            
+    def test_is_int_sqrt(self):
+        self.assertTrue(is_int_sqrt(4))
+        self.assertFalse(is_int_sqrt(3))
+        self.assertTrue(is_int_sqrt(17951*17951))
+        self.assertFalse(is_int_sqrt(17951*17950))
+        self.assertTrue(is_int_sqrt(1795123456789*1795123456789), "large number")
+        self.assertFalse(is_int_sqrt(1795123456789*1795123456788), "large number")
 
 def run(q):
     q.test()
