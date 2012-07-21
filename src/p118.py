@@ -62,6 +62,7 @@ def count_partition(n):
     return cnt, ls
 
 def hashable(l):
+    l.sort()
     return ','.join([str(x) for x in l])
 
 def count():
@@ -79,17 +80,16 @@ def count():
             for e in s:
                 sets.append(e)
         i += 1
-        if i > 200000:
-            d = {}
-            for s in sets:
-                h = hashable(s)
-                try:
-                    if d[h]:
-                        print h
-                        return 'Duplicated.'
-                except KeyError:
-                    d[h] = True
-            return cnt                        
+    d = {}
+    for s in sets:
+        h = hashable(s)
+        try:
+            if d[h]:
+                print h
+                return 'Duplicated.'
+        except KeyError:
+            print h
+            d[h] = True                        
     return cnt
 
 class TestP118(unittest.TestCase):
