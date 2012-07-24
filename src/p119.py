@@ -20,17 +20,17 @@ def search():
     l.sort()
     return l[29]
 
-class TestP118(unittest.TestCase):
+class TP(unittest.TestCase):
     def test_has_property(self):
         self.assertTrue(has_property(8, 512))
 
-class P118:
+class P:
     def test(self):
-        suite = unittest.TestLoader().loadTestsFromTestCase(TestP118)
+        suite = unittest.TestLoader().loadTestsFromTestCase(TP)
         unittest.TextTestRunner(verbosity=2).run(suite)
 
     def solve(self):
         return search()
 
 if __name__ == "__main__":
-    mtools.run(P118())
+    mtools.run(P())
