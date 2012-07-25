@@ -7,15 +7,11 @@ Created on 2012-7-24
 import mtools
 import unittest
 
-def r(i, n):
-    return 2*(i+1)*n
-
-def r_max(n):
-    lim = n*n
-    i = 1
-    while r(i, n) < lim:
-        i += 1
-    return r(i - 1, n)
+def r_max(a):
+    if a%2 == 0:
+        return a*(a-2)
+    b = a/2
+    return 2*a*b 
 
 def get_answer():
     return sum([r_max(i) for i in range(3, 1001)])
