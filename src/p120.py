@@ -10,8 +10,7 @@ import unittest
 def r_max(a):
     if a%2 == 0:
         return a*(a-2)
-    b = a/2
-    return 2*a*b 
+    return a*(a-1) 
 
 def get_answer():
     return sum([r_max(i) for i in range(3, 1001)])
