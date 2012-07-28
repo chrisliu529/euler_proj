@@ -241,6 +241,8 @@ def reverse_str(s):
 def is_palindrome(n):
     return n == reverse_int(n)
 
+def unique(l):
+    return list(set(l))
 def test_prime():
     L = [-5,2,3,5,7,97]
     for x in L:
@@ -315,6 +317,11 @@ class TestMtools(unittest.TestCase):
         self.assertTrue(is_palindrome(22))
         self.assertTrue(is_palindrome(595))
         self.assertFalse(is_palindrome(122))
+        
+    def test_unique(self):
+        self.assertEqual([1,2], unique([1,1,2,2]))
+        self.assertEqual([1,2,3], unique([1,2,3]))
+        self.assertEqual([], unique([]))
 
 def run(q):
     q.test()

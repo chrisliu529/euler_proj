@@ -10,21 +10,19 @@ import unittest
 arr = [i*i for i in range(7073)]
 
 def sum_palindromic_below(lim):    
-    l = 2
-    S = 0
     i = 1
+    lst = []
     while True:
-        s = sum(arr[i:i+l])
+        c = i+2
+        s = sum(arr[i:c])
         if s > lim:
-            if i == 1:
-                return S
-            l += 1
-            i = 1
-        else:
+            return sum(mtools.unique(lst))
+        while s <= lim:
             if mtools.is_palindrome(s):
-                print s,i,l
-                S += s
-            i += 1
+                lst.append(s)
+            s += arr[c]
+            c += 1            
+        i += 1
 
 class TP(unittest.TestCase):
     def test_sum_palindromic_below(self):
