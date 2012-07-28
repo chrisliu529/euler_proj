@@ -226,6 +226,21 @@ def is_prime(n):
         f = f + 6
     return True
 
+def reverse_int(n):
+    s = str(n)
+    return int(reverse_str(s))
+
+def reverse_str(s):
+    rs = ''
+    l = list(s)
+    l.reverse()
+    for x in l:
+        rs = rs + x
+    return rs
+
+def is_palindrome(n):
+    return n == reverse_int(n)
+
 def test_prime():
     L = [-5,2,3,5,7,97]
     for x in L:
@@ -294,6 +309,12 @@ class TestMtools(unittest.TestCase):
         self.assertEqual(1, count_digits(1))
         self.assertEqual(2, count_digits(10))
         self.assertEqual(9, count_digits(123456789))
+        
+    def test_is_palindrome(self):
+        self.assertTrue(is_palindrome(121))
+        self.assertTrue(is_palindrome(22))
+        self.assertTrue(is_palindrome(595))
+        self.assertFalse(is_palindrome(122))
 
 def run(q):
     q.test()
