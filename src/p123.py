@@ -29,7 +29,7 @@ def get_answer():
 class TP(unittest.TestCase):
     def test_r(self):
         self.assertEqual(5, r(5,3))
-        
+
     def test_first_exceeds(self):
         self.assertEqual(7037, first_exceeds(10**9))
 
