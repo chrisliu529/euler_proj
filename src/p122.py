@@ -48,6 +48,7 @@ def get_answer():
                     v = len(S)
                     M[e] = v
                     print e,v,S
+                    print M
                     del cl[e]
                     if cl:
                         continue
