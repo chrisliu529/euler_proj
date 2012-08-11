@@ -9,18 +9,21 @@ import unittest
 import math
 
 def get_answer():
-    return nth_pd(3, 2000)
+    l = nth_pd(3, 2000)
+    return l[1999]
 
 def nth_pd(m, n):
-    cnt = 1 #pd(1) == 3 
-    i = 2
+    l = [1,2]
+    i = 1
     while True:
-        k = pd(i)
-        if k == m:
-            cnt += 1
-            print i, cnt
-            if cnt == n:
-                return i
+        t = s(i)
+        for j in range(2):
+            v = t+j
+            k = pd(v)
+            if k == m:
+                l.append(v)
+                if len(l) == n:
+                    return l
         i += 1
 
 def pd(n):
@@ -84,6 +87,8 @@ def loc(n):
     x = n-(1+3*r*(r-1))
     return (r,x)
 
+first100 = [1, 2, 8, 19, 20, 37, 61, 128, 217, 271, 398, 919, 1519, 1520, 2978, 3170, 4220, 4447, 4681, 5677, 5941, 6488, 8269, 9920, 10621, 12481, 16651, 17558, 22448, 26227, 29701, 34028, 34669, 35317, 35971, 56719, 60920, 61777, 74419, 75367, 80197, 88238, 93458, 110018, 117019, 125461, 136747, 140618, 156637, 169220, 172081, 174968, 182288, 183769, 185257, 214670, 216277, 217891, 246248, 265520, 292970, 302419, 331670, 333667, 362269, 370658, 381278, 407377, 416270, 486019, 498169, 540601, 558578, 590077, 600770, 606151, 672607, 704221, 882920, 1000519, 1053170, 1092637, 1121798, 1181269, 1181270, 1203967, 1215398, 1277269, 1277270, 1281187, 1285111, 1332668, 1340677, 1510171, 1566020, 1627298, 1671788, 1698770, 1703287, 1790270]
+
 class TP(unittest.TestCase):
     def test_loc(self):
         self.assertEqual((1,1), loc(2))
@@ -114,7 +119,8 @@ class TP(unittest.TestCase):
         self.assertEqual(2, pd(17))
         
     def test_nth_pd(self):
-        self.assertEqual(271, nth_pd(3, 10))
+        self.assertEqual(first100[:10], nth_pd(3, 10))
+        self.assertEqual(first100, nth_pd(3, 100))
 
 class P:
     def test(self):
@@ -123,6 +129,7 @@ class P:
 
     def solve(self):
         return get_answer()
+        #pass
 
 if __name__ == "__main__":
     mtools.run(P())
