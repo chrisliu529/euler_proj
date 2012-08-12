@@ -20,7 +20,6 @@ def solve():
 def test():
     test_format()
     test_get_card()
-    assert monopoly_sim(6) == '102400'
 
 def monopoly_sim(sides):
     squares = [0 for i in range(40)]
