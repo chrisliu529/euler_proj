@@ -9,29 +9,36 @@ import unittest
 import random
 
 def get_answer():
-    times = 0
-    win = 0
-    while True:
-        times += 1
-        if peter() > colin():
-            win += 1
-            if times % 1000000 == 0:
-                print '%s: %s' % (times/100, float(win)/times)
-
-def peter():
-    return roll_dice(9, 4)
-
-def colin():
-    return roll_dice(6, 6)
-
-def roll_dice(n, m):
+    peter = ptab(4, 9)
+    colin = ptab(6, 6)
     s = 0
-    for i in range(n):
-        s += random.randint(1, m)
-    return s
+    for i in range(9, 37):
+        s += peter[i]*sum([colin[j] for j in range(6, i)])
+    t = (4**9)*(6**6)
+    return float(s)/t
 
-class TP(unittest.TestCase):
-    def test_xx(self):
+def ptab(n, m):
+    return ptab_rec(n, m, {}, [])
+    
+def ptab_rec(n, m, tab, l):
+    if m == 0:
+        try:
+            tab[sum(l)] += 1
+        except KeyError:
+            tab[sum(l)] = 1
+        return
+    for i in range(1, n+1):
+        l.append(i)
+        ptab_rec(n, m-1, tab, l)
+        l.pop()
+    return tab
+
+def sum_tab(tab):
+    return sum([tab[key] for key in tab.keys()])    
+
+class TP(unittest.TestCase):        
+    def test_ptab(self):
+        self.assertEqual(4**9, sum_tab(ptab(4,9)))
         pass
 
 class P:
