@@ -10,7 +10,9 @@ import unittest
 c = mtools.c
     
 def get_answer():
-    return win_ratio(9, 4, 6, 6)
+    print "n     win      draw"
+    for i in range(20, 101):        
+        print i, win_ratio(i, 6, 100, 6), draw_ratio(i, 6, 100, 6)
 
 def win_ratio(i1, j1, i2, j2):
     peter = ptab(i1, j1)
@@ -19,7 +21,25 @@ def win_ratio(i1, j1, i2, j2):
     for i in range(i1, i1*j1+1):
         s += peter[i]*sum([colin[j] for j in range(i2, i)])
     t = (j1**i1)*(j2**i2)
-    return float(s)/t
+    return '%.7f' % (float(s)/t)
+
+def draw_ratio(i1, j1, i2, j2):
+    peter = ptab(i1, j1)
+    colin = ptab(i2, j2)
+    s = 0
+    m = n = 0
+    if i1 < i2:
+        m = i2
+    else:
+        m = i1
+    if i1*j1 < i2*j2:
+        n = i1*j1
+    else:
+        n = i2*j2 
+    for i in range(m, n):
+        s += peter[i]*colin[i]
+    t = (j1**i1)*(j2**i2)
+    return '%.7f' % (float(s)/t)
 
 def ptab(i, j):
     d = {}
