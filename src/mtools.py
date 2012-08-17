@@ -134,12 +134,16 @@ def fac(n):
 
 #P(n,m)=n(n-1)(n-2)...(n-m+1)= n!/(n-m)!
 def p(n, m):
-    return fac(n)/fac(n-m)
+    return mul(range(n-m+1, n+1))
 
 #C(n,m)=P(n,m)/m!
 def c(n, m):
+    if m > n:
+        return 0
+    if m > n/2:
+        return c(n, n-m)
     return p(n, m)/fac(m)
-    
+
 def sum_of_divisors(n):
     prod = 1
     k = 2
@@ -322,6 +326,13 @@ class TestMtools(unittest.TestCase):
         self.assertEqual([1,2], unique([1,1,2,2]))
         self.assertEqual([1,2,3], unique([1,2,3]))
         self.assertEqual([], unique([]))
+        
+    def test_c(self):
+        self.assertEqual(4, c(4,1))
+        self.assertEqual(6, c(4,2))
+        self.assertEqual(1, c(4,0))
+        self.assertEqual(1, c(4,4))
+        self.assertEqual(0, c(4,5))
 
 def run(q):
     q.test()

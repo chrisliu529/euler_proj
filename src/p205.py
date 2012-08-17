@@ -6,40 +6,48 @@ Created on 2012-8-12
 
 import mtools
 import unittest
-import random
 
+c = mtools.c
+    
 def get_answer():
-    peter = ptab(4, 9)
-    colin = ptab(6, 6)
+    return win_ratio(9, 4, 6, 6)
+
+def win_ratio(i1, j1, i2, j2):
+    peter = ptab(i1, j1)
+    colin = ptab(i2, j2)
     s = 0
-    for i in range(9, 37):
-        s += peter[i]*sum([colin[j] for j in range(6, i)])
-    t = (4**9)*(6**6)
+    for i in range(i1, i1*j1+1):
+        s += peter[i]*sum([colin[j] for j in range(i2, i)])
+    t = (j1**i1)*(j2**i2)
     return float(s)/t
 
-def ptab(n, m):
-    return ptab_rec(n, m, {}, [])
-    
-def ptab_rec(n, m, tab, l):
-    if m == 0:
-        try:
-            tab[sum(l)] += 1
-        except KeyError:
-            tab[sum(l)] = 1
-        return
-    for i in range(1, n+1):
-        l.append(i)
-        ptab_rec(n, m-1, tab, l)
-        l.pop()
-    return tab
+def ptab(i, j):
+    d = {}
+    for n in range(i, j*i+1):
+        d[n] = state_num(i, j, n)
+    return d
 
-def sum_tab(tab):
-    return sum([tab[key] for key in tab.keys()])    
+def state_num(i, j, n):
+    s = c(n-1, i-1)
+    for k in range(1, i+1):
+        v = c(i, k)*a(k, i, j, n)
+        if k % 2 == 0:
+            s += v
+        else:
+            s -= v
+    return s
 
-class TP(unittest.TestCase):        
+def a(k, i, j, n):
+    return c(n-k*j-1, i-1)
+
+t94 = {9: 1, 10: 9, 11: 45, 12: 165, 13: 486, 14: 1206, 15: 2598, 16: 4950, 17: 8451, 18: 13051, 19: 18351, 20: 23607, 21: 27876, 22: 30276, 23: 30276, 24: 27876, 25: 23607, 26: 18351, 27: 13051, 28: 8451, 29: 4950, 30: 2598, 31: 1206, 32: 486, 33: 165, 34: 45, 35: 9, 36: 1}
+t66 = {6: 1, 7: 6, 8: 21, 9: 56, 10: 126, 11: 252, 12: 456, 13: 756, 14: 1161, 15: 1666, 16: 2247, 17: 2856, 18: 3431, 19: 3906, 20: 4221, 21: 4332, 22: 4221, 23: 3906, 24: 3431, 25: 2856, 26: 2247, 27: 1666, 28: 1161, 29: 756, 30: 456, 31: 252, 32: 126, 33: 56, 34: 21, 35: 6, 36: 1}
+
+class TP(unittest.TestCase):
     def test_ptab(self):
-        self.assertEqual(4**9, sum_tab(ptab(4,9)))
-        pass
+        self.maxDiff = None
+        self.assertEqual(t94, ptab(9,4))
+        self.assertEqual(t66, ptab(6,6))
 
 class P:
     def test(self):
