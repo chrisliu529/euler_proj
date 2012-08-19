@@ -333,6 +333,7 @@ class TestMtools(unittest.TestCase):
         self.assertEqual(1, c(4,0))
         self.assertEqual(1, c(4,4))
         self.assertEqual(0, c(4,5))
+        self.assertEqual(1, c(0,0))
 
 def run(q):
     if q.test():
