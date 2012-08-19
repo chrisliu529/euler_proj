@@ -335,10 +335,10 @@ class TestMtools(unittest.TestCase):
         self.assertEqual(0, c(4,5))
 
 def run(q):
-    q.test()
-    t = time.time()
-    print "answer = %s" % (q.solve())
-    print "(%s)" % (time.time() - t)
+    if q.test():
+        t = time.time()
+        print "answer = %s" % (q.solve())
+        print "(%s)" % (time.time() - t)
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:

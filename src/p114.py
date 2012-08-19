@@ -41,7 +41,8 @@ class TestP114(unittest.TestCase):
 class P114:
     def test(self):
         suite = unittest.TestLoader().loadTestsFromTestCase(TestP114)
-        unittest.TextTestRunner(verbosity=2).run(suite)
+        result = unittest.TextTestRunner(verbosity=2).run(suite)
+        return result.wasSuccessful()
 
     def solve(self):
         return fill(50, 3)

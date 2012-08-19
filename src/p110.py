@@ -95,7 +95,8 @@ class TestP110(unittest.TestCase):
 class P110:
     def test(self):
         suite = unittest.TestLoader().loadTestsFromTestCase(TestP110)
-        unittest.TextTestRunner(verbosity=2).run(suite)
+        result = unittest.TextTestRunner(verbosity=2).run(suite)
+        return result.wasSuccessful()
 
     def solve(self):
         return search([1], 4000000)

@@ -34,7 +34,8 @@ class TestP390(unittest.TestCase):
 class P390:
     def test(self):
         suite = unittest.TestLoader().loadTestsFromTestCase(TestP390)
-        unittest.TextTestRunner(verbosity=2).run(suite)
+        result = unittest.TextTestRunner(verbosity=2).run(suite)
+        return result.wasSuccessful()
 
     def solve(self):
         return S(4)

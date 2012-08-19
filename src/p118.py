@@ -88,7 +88,8 @@ class TestP118(unittest.TestCase):
 class P118:
     def test(self):
         suite = unittest.TestLoader().loadTestsFromTestCase(TestP118)
-        unittest.TextTestRunner(verbosity=2).run(suite)
+        result = unittest.TextTestRunner(verbosity=2).run(suite)
+        return result.wasSuccessful()
 
     def solve(self):
         return count()

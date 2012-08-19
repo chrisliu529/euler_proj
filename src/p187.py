@@ -48,7 +48,8 @@ class TP(unittest.TestCase):
 class P:
     def test(self):
         suite = unittest.TestLoader().loadTestsFromTestCase(TP)
-        unittest.TextTestRunner(verbosity=2).run(suite)
+        result = unittest.TextTestRunner(verbosity=2).run(suite)
+        return result.wasSuccessful()
 
     def solve(self):
         return get_answer()

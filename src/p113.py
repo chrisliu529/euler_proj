@@ -24,7 +24,8 @@ class TestP113(unittest.TestCase):
 class P113:
     def test(self):
         suite = unittest.TestLoader().loadTestsFromTestCase(TestP113)
-        unittest.TextTestRunner(verbosity=2).run(suite)
+        result = unittest.TextTestRunner(verbosity=2).run(suite)
+        return result.wasSuccessful()
 
     def solve(self):
         return count_not_bouncy(100, 9)
