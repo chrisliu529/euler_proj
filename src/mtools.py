@@ -42,7 +42,11 @@ def combine_digits(l):
 
 def comb(items, n=None):
     if n is None:
-        n = len(items)    
+        n = len(items)
+    if n == 0:
+        yield []
+    if n < 0:
+        return   
     for i in range(len(items)):
         v = items[i:i+1]
         if n == 1:
@@ -335,15 +339,26 @@ class TestMtools(unittest.TestCase):
         self.assertEqual(0, c(4,5))
         self.assertEqual(1, c(0,0))
 
+    def test_comb(self):
+        for a in comb([1,2],2):
+            self.assertEqual([1,2], a)
+        l = [a for a in comb([1,2],1)]
+        self.assertEqual(2, len(l))
+        self.assertEqual([1], l[0])
+        self.assertEqual([2], l[1])
+        l = [a for a in comb([1,2],0)]
+        self.assertEqual(1, len(l))
+        self.assertEqual([], l[0])
+        l = [a for a in comb([1,2,3],2)]
+        self.assertEqual(3, len(l))
+        self.assertEqual([1,2], l[0])
+        self.assertEqual([1,3], l[1])
+        self.assertEqual([2,3], l[2])
+        l = [a for a in comb([1,2,3],-1)]
+        self.assertEqual(0, len(l))
+
 def run(q):
     if q.test():
         t = time.time()
         print "answer = %s" % (q.solve())
         print "(%s)" % (time.time() - t)
-
-if __name__ == "__main__":
-    if len(sys.argv) == 1:
-        unittest.main()
-    else:
-        L = [is_prime(int(x)) for x in sys.argv[1:]]
-        print L
