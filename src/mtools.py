@@ -356,6 +356,10 @@ class TestMtools(unittest.TestCase):
         self.assertEqual([2,3], l[2])
         l = [a for a in comb([1,2,3],-1)]
         self.assertEqual(0, len(l))
+        
+    def test_sieve_primes(self):
+        self.assertEqual([2,3], sieve_primes(5))
+        self.assertEqual([2,3,5], sieve_primes(6))
 
 def run(q):
     if q.test():
