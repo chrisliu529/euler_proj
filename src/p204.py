@@ -26,12 +26,11 @@ def hamming(M, N):
 
 def dfs(v, cur, arr, N):
     cnt = 0
-    if cur == len(arr):
-        if v<=N:
-            return 1
-        return 0
     if v > N:
         return 0
+    if cur == len(arr):
+        return 1
+
     for b in arr[cur]:
         vb = v
         v *= b
