@@ -22,12 +22,12 @@ def build_arr(M, N):
 
 def hamming(M, N):
     arr = build_arr(M, N)
-    return 1 + dfs(1, 0, arr, N)  # 1 is hamming number
+    return dfs(1, 0, arr, N)
 
 def dfs(v, cur, arr, N):
     cnt = 0
     if cur == len(arr):
-        if v>1 and v<=N:
+        if v<=N:
             return 1
         return 0
     if v > N:
