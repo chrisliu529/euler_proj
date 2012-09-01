@@ -21,6 +21,8 @@ def count(n):
             b2 = b*b
             a2 = 4*b2*c2+b2+c2
             if mtools.is_square(a2):
+                a = int(sqrt(a2))
+                print c,b,a
                 s += int(sqrt(a2))
             b += 1
         c += 1
