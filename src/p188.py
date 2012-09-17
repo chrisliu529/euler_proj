@@ -10,6 +10,8 @@ import time
 import sys
 
 def hyper_exp_mod(a, b, m):
+    if m == 1:
+        return a
     if b == 1:
         return a % m
     return pow(a, hyper_exp_mod(a, b-1, mtools.phi(m)), m)
