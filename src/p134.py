@@ -11,13 +11,12 @@ import time
 def get_n(p1, p2):
     d = mtools.count_digits(p1)
     a = 1
+    dd = 10**d
     while True:
-        n = a*(10**d) + p1 
+        n = a*dd + p1 
         if n % p2 != 0:
             a += 1
         else:
-            b = n / p2
-            print 'p1=%s p2=%s a=%s b=%s n=%s' % (p1, p2, a, b, n)
             return n
 
 def sum_n(lim):
@@ -30,12 +29,12 @@ def sum_n(lim):
     return s
 
 def solve():
-    return sum_n(1000)
+    return sum_n(1000000)
 
 class TP(unittest.TestCase):
-    def test_min_d(self):
-        pass
-
+    def test_sum_n(self):
+        self.assertEqual(59358, sum_n(100))
+        
 if __name__ == "__main__":
     t = time.time()
     print "answer = %s" % solve()
