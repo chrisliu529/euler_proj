@@ -1,7 +1,7 @@
 import math, time, mtools, sys
 
 def solve():
-    return sum_min(100)
+    return sum_min(12001)
 
 def sum_min(border):
     s = 0
@@ -31,23 +31,19 @@ def test():
 
 def min_product_sum(k):
     r = min_product_sum_with_start(k, k)
-    #print 'min_product_sum(%d) = %d' % (k, r)
     return r
 
 def min_product_sum_with_start(k, start):
-    print 'min_product_sum_with_start(%d,%d) = ' % (k, start),
     i = start
     while True:
         if not mtools.is_prime(i):
             p, c = mtools.prime_factors(i)
             #i-k + len(factors) == sum(factors)
             if search_match(i, p, c, k):
-                print i
                 return i
         i = i + 1
 
 def search_match(i, p, c, k):
-    #print 'search_match(%s, %s, %s, %s)' % (i, p, c, k)
     return search_match_rec(i, p, c, i-k+2, 0)
 
 '''
@@ -57,7 +53,6 @@ t: i - k + len(factors)
 s: sum(factors)
 '''
 def search_match_rec(i, p, c, t, s):
-    #print 'search_match_rec(%s, %s, %s, %s, %s)' % (i, p, c, t, s)
     if s > t:
         return False
 
@@ -105,7 +100,6 @@ def unique_list(l):
     return rl
 
 if __name__ == "__main__":
-    test()
     t = time.time()
     print "answer = %s" % (solve())
     print "(%s)" % (time.time() - t)

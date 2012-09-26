@@ -1,10 +1,15 @@
-def change(l):
-    l.append(4)
+import os
+import re
 
-def sum_hs(n):
-    s = 0
-    for i in range(1, n+1):
-        s += 1.0/i
-    return s
+def to_rename(f):
+	m = re.match(r'^[0-9].*\.py$', f)
+	if m is None:
+		return False
+	return True
 
-print sum_hs(10**7)
+l = os.listdir(".")
+l2 = [f for f in l if to_rename(f)]
+for f in l2:
+	s = 'git mv %s %s' % (f, 'p' + f)
+	os.system(s)
+
