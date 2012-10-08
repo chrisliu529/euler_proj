@@ -273,6 +273,24 @@ def is_square(t):
     r = int(math.sqrt(t))
     return r*r == t
 
+stirling2_seq = {}
+
+def stirling2(p, k):
+    if k == 0:
+        if p == 0:
+            return 1
+        return 0
+    if p == k:
+        return 1
+    if p == 0:
+        return 0
+    if k == 1:
+        return 1
+    try:
+        return stirling2_seq[(p, k)]
+    except KeyError:
+        return k*stirling2(p-1, k) + stirling2(p-1, k-1)
+
 class TestMtools(unittest.TestCase):
     def setUp(self):
         pass
@@ -360,6 +378,13 @@ class TestMtools(unittest.TestCase):
     def test_sieve_primes(self):
         self.assertEqual([2,3], sieve_primes(5))
         self.assertEqual([2,3,5], sieve_primes(6))
+        
+    def test_stirling2(self):
+        self.assertEqual(1, stirling2(0, 0))
+        self.assertEqual(1, stirling2(1, 1))
+        self.assertEqual(0, stirling2(2, 0))
+        self.assertEqual(7, stirling2(4, 2))
+        self.assertEqual(301, stirling2(7, 3))
 
 def run(q):
     if q.test():
