@@ -8,35 +8,54 @@ import mtools
 import unittest
 import time
 
+fv = {}
+
+def R(n):
+    return (10**n - 1)/9
+
+def prime_factors(n):
+    ps, _ = mtools.prime_factors(n)
+    return ps
+
 def solve():
-    factors_fun = [lambda x: x+1,
-                   lambda x: (x**2+1),
-                   lambda x: (x**4+1),
-                   lambda x: (x**4-x**3+x**2-x+1),
-                   lambda x: (x**4+x**3+x**2+x+1),
-                   lambda x: (x**8+1),
-                   lambda x: (x**8-x**6+x**4-x**2+1),
-                   lambda x: (x**16+1),
-                   lambda x: (x**16-x**12+x**8-x**4+1),
-                   lambda x: (x**20-x**15+x**10-x**5+1),
-                   lambda x: (x**20+x**15+x**10+x**5+1),
-                   lambda x: (x**32-x**24+x**16-x**8+1),
-                   lambda x: (x**32+1)]
-    factors = [x(10) for x in factors_fun]
-    l = []
-    for fc in factors:
-        print fc
-        primes, count = mtools.prime_factors(fc)
-        for (p, c) in zip(primes, count):            
-            l += [p]*c
-        l.sort()
-        print len(l), l
-        if len(l) >= 40:
-            break
-    return sum(l[:40])
+    return collect_primes(10*9, 40)
+
+def collect_primes1(n):
+    pl = []
+    fl = mtools.factors(n)
+    fl.sort()
+    print n, fl
+    r = R(n)
+    for f in fl:
+        if f != n:
+            t = r / R(f)
+            pl += prime_factors(t)
+    return mtools.unique(pl)
+
+def collect_primes(n, m):
+    pl = []
+    fl = mtools.factors(n)
+    fl.sort()
+    for f in fl:
+        try:
+            if fv[f]:
+                continue
+        except KeyError:
+            pl += collect_primes1(f)
+            pl = mtools.unique(pl)
+            pl.sort()
+            print f, pl, fv
+            if len(pl) >= m:
+                return sum(pl[:m])
+            fv[f] = True 
 
 class TP(unittest.TestCase):
-    pass
+    def test_R(self):
+        self.assertEqual(11, R(2))
+        self.assertEqual(1111, R(4))
+    
+    def test_collect_primes(self):
+        self.assertEqual(9414, collect_primes(10, 4))
 
 if __name__ == "__main__":
     t = time.time()
