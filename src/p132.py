@@ -8,23 +8,18 @@ import mtools
 import unittest
 import time
 
-def parse_line(line):
-    return [int(n) for n in line.split(',')]
-
 def solve():
-    fl = mtools.factors(10**9)
-    fl.sort()
-    fl2 = [f for f in fl if f <= 500]
-    print len(fl2), fl2
-    f = open('111.txt')
-    ps = []
-    for line in f:
-        ps += parse_line(line)
-    f.close()
-    psu = mtools.unique(ps)
-    psu.sort()
-    print len(psu), psu[:40]
-    return sum(psu[:40])
+    ps = mtools.sieve_primes(10**6)
+    n = 10**9
+    res = []
+    for p in ps:
+        if p < 7:
+            continue
+        if pow(10, n, p) == 1:
+            res.append(p)
+        if len(res) == 40:
+            print res
+            return sum(res)
 
 if __name__ == "__main__":
     t = time.time()
