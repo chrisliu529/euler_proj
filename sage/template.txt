@@ -1,0 +1,15 @@
+import time
+import unittest
+testing = 0
+
+def init(t):
+    global testing
+    testing = t
+init(0)
+
+if testing:
+    unittest.main()
+else:
+    t = time.time()
+    print "answer = %s" % solve()
+    print "(%s)" % (time.time() - t)
