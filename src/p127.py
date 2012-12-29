@@ -23,6 +23,8 @@ def sum_c(N):
     au = int(N/2+0.5)
     s = 0
     for a in range(1,au):
+	if a % 1000 == 0:
+            print a
         for b in range(a+1, N-a):
             c = a+b
             if radicals[a]*radicals[b]*radicals[c] < c and gcd(a,b) == 1:
@@ -30,7 +32,7 @@ def sum_c(N):
     return s
 
 def solve():
-    return sum_c(12000)
+    return sum_c(120000)
 
 class TP(unittest.TestCase):
     def test_rad(self):
