@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
 
-int powers[32];
+unsigned int powers[32];
 
 void init()
 {
