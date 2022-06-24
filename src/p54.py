@@ -1,4 +1,4 @@
-import time, math, mtools
+import time
 
 '''
     * High Card: Highest value card.
@@ -23,6 +23,7 @@ FULL_HOUSE = 7
 FOUR_OF_A_KIND = 8
 STRAIGHT_FLUSH = 9
 
+
 def compare_hands(str_cards):
     cards = str_cards.split(' ')
     if len(cards) != 10:
@@ -31,7 +32,10 @@ def compare_hands(str_cards):
     hand2 = [make_card(c) for c in cards[5:]]
     p1 = parse_hand(hand1)
     p2 = parse_hand(hand2)
-    return cmp_parse(p1, p2)
+    if p1 > p2:
+        return 1
+    return 2
+
 
 def make_card(c):
     value = c[0]
@@ -41,6 +45,7 @@ def make_card(c):
     if i < 0:
         return (int(value), color)
     return (10+i, color)
+
 
 def check_dup(hv):
     assert len(hv) > 1
@@ -67,14 +72,16 @@ def check_dup(hv):
         ret = cr, r, [x for x in hv if x != cr]
     else:
         ret = 0, 0, hv
-    #print 'check_dup', hv, ret
+    # print 'check_dup', hv, ret
     return ret
+
 
 def values(h):
     return [x[0] for x in h]
 
+
 def parse_hand(h):
-    h.sort(cmp=lambda x,y: cmp(x[0], y[0]), reverse=True)
+    h.sort(key=lambda x: x[0], reverse=True)
     isf = is_flush(h)
     iss = is_straight(h)
     if isf and iss:
@@ -108,12 +115,14 @@ def parse_hand(h):
         return (HIGH_CARDS, remain)
     return 1
 
+
 def is_flush(h):
     color = h[0][1]
     for i in range(1, len(h)):
         if color != h[i][1]:
             return False
     return True
+
 
 def is_straight(h):
     start = h[0][0]
@@ -122,13 +131,9 @@ def is_straight(h):
             return False
     return True
 
-def cmp_parse(p1, p2):
-    if cmp(p1, p2) > 0:
-        return 1
-    return 2
 
 def solve():
-    f = open('poker.txt')
+    f = open('p054_poker.txt')
     s = f.read()
     lines = s.split('\n')
     cnt = 0
@@ -136,36 +141,40 @@ def solve():
         res = compare_hands(line)
         if res == 1:
             cnt = cnt + 1
-        print '%s (%s)' % (line, res)
+        print(f'{line} ({res})')
     return cnt
+
 
 def parse_hand_sub(s):
     cards = s.split(' ')
     hand = [make_card(c) for c in cards]
     p = parse_hand(hand)
-    #print s, p
+    # print s, p
     return p
+
 
 def test():
     test_make_card()
     test_parse_hand()
     test_compare_hands()
 
+
 def test_parse_hand():
     assert (STRAIGHT_FLUSH, 14) == parse_hand_sub('TS JS QS KS AS')
     assert (STRAIGHT, 14) == parse_hand_sub('TS JS QS KS AD')
-    assert (FLUSH, [14,13,12,11,2]) == parse_hand_sub('2S JS QS KS AS')
+    assert (FLUSH, [14, 13, 12, 11, 2]) == parse_hand_sub('2S JS QS KS AS')
     assert (STRAIGHT, 14) == parse_hand_sub('TS JS QS KS AD')
-    assert (ONE_PAIR, [10,14,13,12]) == parse_hand_sub('TS TH QS KS AD')
-    assert (ONE_PAIR, [10,14,13,12]) == parse_hand_sub('TS QS AD KS TH')
-    assert (TWO_PAIRS, [12,10,14]) == parse_hand_sub('TS TH QS QH AD')
-    assert (TWO_PAIRS, [12,10,14]) == parse_hand_sub('QS QH TS TH AD')
-    assert (THREE_OF_A_KIND, [10,14,12]) == parse_hand_sub('TS TH TD QH AD')
-    assert (FOUR_OF_A_KIND, [10,14]) == parse_hand_sub('TS TH TD TC AD')
-    assert (FULL_HOUSE, [10,14]) == parse_hand_sub('TS TH TD AC AD')
-    assert (FULL_HOUSE, [10,14]) == parse_hand_sub('AC AD TS TH TD')
-    assert (FULL_HOUSE, [10,14]) == parse_hand_sub('AD TS TH AC TD')
+    assert (ONE_PAIR, [10, 14, 13, 12]) == parse_hand_sub('TS TH QS KS AD')
+    assert (ONE_PAIR, [10, 14, 13, 12]) == parse_hand_sub('TS QS AD KS TH')
+    assert (TWO_PAIRS, [12, 10, 14]) == parse_hand_sub('TS TH QS QH AD')
+    assert (TWO_PAIRS, [12, 10, 14]) == parse_hand_sub('QS QH TS TH AD')
+    assert (THREE_OF_A_KIND, [10, 14, 12]) == parse_hand_sub('TS TH TD QH AD')
+    assert (FOUR_OF_A_KIND, [10, 14]) == parse_hand_sub('TS TH TD TC AD')
+    assert (FULL_HOUSE, [10, 14]) == parse_hand_sub('TS TH TD AC AD')
+    assert (FULL_HOUSE, [10, 14]) == parse_hand_sub('AC AD TS TH TD')
+    assert (FULL_HOUSE, [10, 14]) == parse_hand_sub('AD TS TH AC TD')
     assert (HIGH_CARDS, [14, 11, 8, 7, 2]) == parse_hand_sub('AD JS 8H 7C 2D')
+
 
 def test_make_card():
     assert (5, 'H') == make_card('5H')
@@ -173,7 +182,8 @@ def test_make_card():
     assert (10, 'D') == make_card('TD')
     assert (14, 'S') == make_card('AS')
     assert (11, 'S') == make_card('JS')
-    assert (2, 'D') == make_card('2D')    
+    assert (2, 'D') == make_card('2D')
+
 
 def test_compare_hands():
     assert 2 == compare_hands('5H 5C 6S 7S KD 2C 3S 8S 8D TD')
@@ -182,8 +192,9 @@ def test_compare_hands():
     assert 1 == compare_hands('4D 6S 9H QH QC 3D 6D 7H QD QS')
     assert 1 == compare_hands('2H 2D 4C 4D 4S 3C 3D 3S 9S 9D')
 
+
 if __name__ == "__main__":
     test()
     t = time.time()
-    print "answer = %s" % (solve())
-    print "(%s)" % (time.time() - t)
+    print(f"answer = {solve()}")
+    print(f"({time.time() - t})")

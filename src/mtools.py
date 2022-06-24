@@ -250,7 +250,8 @@ def is_palindrome(n):
     return n == reverse_int(n)
 
 def unique(l):
-    return list(set(l))
+    return list(set(l))
+
 def test_prime():
     L = [-5,2,3,5,7,97]
     for x in L:
@@ -262,7 +263,7 @@ def test_prof_prime():
     t2 = time.time()
     L2 = [x for x in range(1,1000000) if is_prime2(x)]
     t3 = time.time()
-    print "(%s, %s)" % (t2-t, t3-t2)
+    print(f"({t2-t}, {t3-52})")
 
 def sort_factors(n):
     l = factors(n)
@@ -389,5 +390,5 @@ class TestMtools(unittest.TestCase):
 def run(q):
     if q.test():
         t = time.time()
-        print "answer = %s" % (q.solve())
-        print "(%s)" % (time.time() - t)
+        print(f"answer = {q.solve()}")
+        print(f"({time.time() - t})")
